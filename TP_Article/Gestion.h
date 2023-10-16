@@ -16,8 +16,9 @@ public:
 
 	int getTaille();
 
-	Article* Ajouter();
+	Article* Ajouter(string n);
 	Article* LireAt(int pos);
 	bool Supprimer(int pos);
+	Article* AfficheInfo();
 };
 

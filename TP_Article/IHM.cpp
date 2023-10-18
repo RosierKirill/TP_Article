@@ -131,30 +131,30 @@ void IHM::Commande()
 	int nombreDeduis;
 	Article* art;
 	int sortie = 1;
-	vector<Article*>* tbltmp = new vector<Article*>();
+	vector<Article*>* tabArt = new vector<Article*>();
 	AfficherTout();
 	cout << "Commande : " << endl;
 	while (sortie != 0) {
 		numArticle = this->ChoixArticle();
-		art = new Article(gest->LireAt(numArticle)->getNom());
+		art = new Article(gest->LireAt(numArticle-1)->getNom());
 		if (numArticle > 0)
 		{
-			art = gest->LireAt(numArticle - 1);
+			art = gest->LireAt(numArticle -1);
 		}
 		cout << "Combien vous en voulez ? (il y en a " << art->stock << " en stock)";
 		cin >> nombreDeduis;
 		cout << "0 pour arreter";
 		cin >> sortie;
-		tbltmp->push_back(gest->Commande(nombreDeduis, numArticle - 1));
+		tabArt->push_back(gest->Commande(nombreDeduis, numArticle - 1));
 
 	}
 
 	double total = NULL;
 	cout << "Ticket : " << endl;
 	// On affiche tous les objets crées
-	for (int j = 0; j < tbltmp->size(); j++)
+	for (int j = 0; j < tabArt->size(); j++)
 	{
-		Article* art = tbltmp->at(j);
+		Article* art = tabArt->at(j);
 		cout << j + 1 << ": " << art->getNom() << " " << art->prixHT << "e    " << art->stock
 			<< endl;
 		total = total + (art->prixHT * art->stock);

@@ -27,12 +27,12 @@ void IHM::Start(Gestion * g) {
 		switch (choix)
 		{
 		case 1:
-			cout << "Le nom : " ;
+			cout << "Le nom : ";
 			cin >> leNom;
 			art = gest->Ajouter(leNom);
 			Modifier(art);
 			break;
-		case 2 :
+		case 2:
 			numArticle = this->ChoixArticle();
 			if (numArticle > 0)
 			{
@@ -40,18 +40,21 @@ void IHM::Start(Gestion * g) {
 				Modifier(art);
 			}
 			break;
-		case 3 :
+		case 3:
 			numArticle = this->ChoixArticle();
 			if (numArticle > 0)
 			{
 				gest->Supprimer(numArticle - 1);
 			}
 			break;
-		case 4 :
+		case 4:
 			AfficherTout();
 			break;
-		case 5 :
+		case 5:
 			AfficherToutHStock();
+			break;
+		case 6:
+			Commande();
 			break;
 		}
 	} while (choix != 0);
@@ -65,6 +68,7 @@ int IHM::AfficheMenu()
 	cout << "3 : Supprimer un Article" << endl;
 	cout << "4 : Afficher tous les  Articlee" << endl;
 	cout << "5 : Afficher les Articles hors stock" << endl;
+	cout << "6 : Faire une commande" << endl;
 	cout << "0 : Quitter" << endl;
 	cout << "Choix :";
 	cin >> choix;
@@ -118,4 +122,42 @@ void IHM::AfficherToutHStock()
 			cout << setw(15) << left << art->getNom() << setw(15) << left << art->prixHT << setw(15) << left << art->stock << endl;
 		}
 	}
+}
+
+void IHM::Commande()
+{
+
+	int numArticle;
+	int nombreDeduis;
+	Article* art;
+	int sortie = 1;
+	vector<Article*>* tbltmp = new vector<Article*>();
+	AfficherTout();
+	cout << "Commande : " << endl;
+	while (sortie != 0) {
+		numArticle = this->ChoixArticle();
+		art = new Article(gest->LireAt(numArticle)->getNom());
+		if (numArticle > 0)
+		{
+			art = gest->LireAt(numArticle - 1);
+		}
+		cout << "Combien vous en voulez ? (il y en a " << art->stock << " en stock)";
+		cin >> nombreDeduis;
+		cout << "0 pour arreter";
+		cin >> sortie;
+		tbltmp->push_back(gest->Commande(nombreDeduis, numArticle - 1));
+
+	}
+
+	double total = NULL;
+	cout << "Ticket : " << endl;
+	// On affiche tous les objets crées
+	for (int j = 0; j < tbltmp->size(); j++)
+	{
+		Article* art = tbltmp->at(j);
+		cout << j + 1 << ": " << art->getNom() << " " << art->prixHT << "e    " << art->stock
+			<< endl;
+		total = total + (art->prixHT * art->stock);
+	}
+	cout << "prix total: " << total << endl;
 }

@@ -7,8 +7,10 @@ using namespace std;
 class Gestion
 {
 	vector<Article*>* listeArticle;
+	vector<Article*>* ticket;
 	void lireFichier();
 	void sauverFichier();
+
 
 public:
 	Gestion();
@@ -19,6 +21,6 @@ public:
 	Article* Ajouter(string n);
 	Article* LireAt(int pos);
 	bool Supprimer(int pos);
-	Article* AfficheInfo();
+	Article* Commande(int deduis, int numArticle);
 };
 

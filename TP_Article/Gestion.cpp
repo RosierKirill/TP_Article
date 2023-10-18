@@ -98,3 +98,23 @@ bool Gestion::Supprimer(int pos)
 	return ok;
 }
 
+Article* Gestion::Commande(int deduis, int numArticle)
+{
+	Article* tmp;
+	int stockrestant = 0;
+
+
+
+	stockrestant = listeArticle->at(numArticle)->stock - deduis;
+
+	listeArticle->at(numArticle)->stock = stockrestant;
+
+	tmp = new Article(listeArticle->at(numArticle)->getNom());
+	tmp->prixHT = listeArticle->at(numArticle)->prixHT;
+	tmp->stock = deduis;
+
+
+
+	return tmp;
+}
+

@@ -21,6 +21,6 @@ private:
 	void Modifier(Article*);
 	void AfficherTout();
 	void AfficherToutHStock();
-
+	void Commande();
 };
 
